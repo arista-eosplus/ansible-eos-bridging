@@ -33,19 +33,16 @@ The tasks in this role are driven by the ``switchports`` and ``vlans`` objects
 described below:
 
 **switchports** (list) each entry contains the following keys:
-- **name**: (REQUIRED) (string) The interface name of the switchport
-- **mode**: (choices: trunk,access) Mode of operation for the interface.
-If no value is provided the attribute will be omitted which will cause
-the EOS default to be used; typically access.
-- **access_vlan**: (string) Vlan associated with the interface.
-Used if mode: access.
-- **trunk_native_vlan**: (string) The native vlan used when mode: trunk.
-- **trunk_allowed_vlans**: (list) The set of vlans allowed to traverse the
-interface when mode: trunk.
-- **trunk_groups**: (list) The set of trunk groups configured on the
-interface.
-- **state**: (choices: absent, present) Set the state for the switchport. The
-default state is present.
+
+|                 Key | Type                      | Notes                                                  |
+|--------------------:|---------------------------|--------------------------------------------------------|
+|                name | string (required)         | The interface name of the switchport                   |
+|                mode | choices: access*, trunk   | Mode of operation for the interface                    |
+|         access_vlan | string                    | Only required for http or https connections            |
+|   trunk_native_vlan | string                    | Vlan associated with the interface. Used if mode=trunk |
+| trunk_allowed_vlans | list                      | The native vlan used when mode=trunk.                  |
+|        trunk_groups | list                      | The set of trunk groups configured on the interface    |
+|               state | choices: present*, absent | Set the state for the switchport                       |
 
 **vlans** (list) each entry contains the following keys:
 - **vlanid**: (REQUIRED) (int) The vlan id.
