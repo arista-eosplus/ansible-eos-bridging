@@ -45,19 +45,23 @@ described below:
 |               state | choices: present*, absent | Set the state for the switchport                       |
 
 **vlans** (list) each entry contains the following keys:
-- **vlanid**: (REQUIRED) (int) The vlan id.
-- **name**: (string) The name for the vlan. No spaces allowed.
-- **trunk_groups**: (list) The list of trunk groups associated with the vlan.
-- **enable**: (boolean) enable or disable the vlan
-- **state**: (choices: absent, present) Ensure the vlan is present or removed.
-The default state is present.
 
-**eos_purge_vlans**: (boolean. Default: false) This works in conjunction with
-    the list of vlans configured with the ``vlans`` list. If true, all vlans
-    on the switch that are not in the ``vlans`` list will be removed. Use caution
-    when using the purge feature. If for example you use the arista.eos-mlag role, vlans
-    will be created that won't be listed here, thereby removing those mlag-related
-    vlans.
+|          Key | Type                      | Notes                                                 |
+|-------------:|---------------------------|-------------------------------------------------------|
+|       vlanid | int (required)            | The vlan id. Example: 1, 1000, 1024. Without the Vlan |
+|         name | string                    | The name for the vlan. No spaces allowed.             |
+| trunk_groups | list                      | The set of trunk groups configured on the interface   |
+|       enable | boolean: true*, false     |                                                       |
+|        state | choices: present*, absent | Set the state for the vlan                            |
+
+|             Key | Type                  | Notes                                                                                                                                                                                                                                                                                                                                                            |
+|----------------:|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| eos_purge_vlans | boolean: true, false* | This works in conjunction with,the list of vlans configured with the ``vlans`` list. If true, all vlans,on the switch that are not in the ``vlans`` list will be removed. Use caution,when using the purge feature. If for example you use the arista.eos-mlag role, vlans,will be created that won't be listed here, thereby removing those mlag-related,vlans. |
+
+```
+Note: Asterisk (*) denotes the default value if none specified
+``` 
+
 
 Dependencies
 ------------
