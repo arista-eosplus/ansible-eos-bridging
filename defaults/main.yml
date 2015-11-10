@@ -1,0 +1,4 @@
+---
+# defaults file for eos-bridging
+# these defaults will cause Ansible to skip all tasks
+eos_purge_vlans: no
