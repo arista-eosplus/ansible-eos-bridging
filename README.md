@@ -33,7 +33,7 @@ The tasks in this role are driven by the ``switchports`` and ``vlans`` objects
 described below:
 
 **switchports** (list) each entry contains the following keys:
-- **name**: [REQUIRED] (string) The interface name of the switchport
+- **name**: (REQUIRED) (string) The interface name of the switchport
 - **mode**: (choices: trunk,access) Mode of operation for the interface.
 If no value is provided the attribute will be omitted which will cause
 the EOS default to be used; typically access.
@@ -48,7 +48,7 @@ interface.
 default state is present.
 
 **vlans** (list) each entry contains the following keys:
-- **vlanid**: [REQUIRED] (int) The vlan id.
+- **vlanid**: (REQUIRED) (int) The vlan id.
 - **name**: (string) The name for the vlan. No spaces allowed.
 - **trunk_groups**: (list) The list of trunk groups associated with the vlan.
 - **enable**: (boolean) enable or disable the vlan
