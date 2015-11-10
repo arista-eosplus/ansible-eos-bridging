@@ -32,41 +32,34 @@ Role Variables
 The tasks in this role are driven by the ``switchports`` and ``vlans`` objects
 described below:
 
-    switchports (list):
-      - **name**: (string) The interface name of the switchport
+**switchports** (list) each entry contains the following keys:
+- **name**: [REQUIRED] (string) The interface name of the switchport
+- **mode**: (choices: trunk,access) Mode of operation for the interface.
+If no value is provided the attribute will be omitted which will cause
+the EOS default to be used; typically access.
+- **access_vlan**: (string) Vlan associated with the interface.
+Used if mode: access.
+- **trunk_native_vlan**: (string) The native vlan used when mode: trunk.
+- **trunk_allowed_vlans**: (list) The set of vlans allowed to traverse the
+interface when mode: trunk.
+- **trunk_groups**: (list) The set of trunk groups configured on the
+interface.
+- **state**: (choices: absent, present) Set the state for the switchport. The
+default state is present.
 
-        **mode**: (choices: trunk,access) Mode of operation for the interface.
-        If no value is provided the attribute will be omitted which will cause
-        the EOS default to be used; typically access.
+**vlans** (list) each entry contains the following keys:
+- **vlanid**: [REQUIRED] (int) The vlan id.
+- **name**: (string) The name for the vlan. No spaces allowed.
+- **trunk_groups**: (list) The list of trunk groups associated with the vlan.
+- **enable**: (boolean) enable or disable the vlan
+- **state**: (choices: absent, present) Ensure the vlan is present or removed.
 
-        **access_vlan**: (string) Vlan associated with the interface.
-        Used if mode: access.
-
-        **trunk_native_vlan**: (string) The native vlan used when mode: trunk.
-
-        **trunk_allowed_vlans**: (list) The set of vlans allowed to traverse the
-        interface when mode: trunk.
-
-        **trunk_groups**: (list) The set of trunk groups configured on the
-        interface.
-
-        **state**: (choices: absent, present) Set the state for the switchport. The
-        default state is present.
-
-    vlans (list):
-      - **vlanid**: (int) The vlan id.
-
-        **name**: (string) The name for the vlan. No spaces allowed.
-
-        **trunk_groups**: (list) The list of trunk groups associated with the vlan.
-
-        **enable**: (boolean) enable or disable the vlan
-
-        **state**: (choices: absent, present) Ensure the vlan is present or removed.
-
-    eos_purge_vlans: (boolean. Default: false) This works in conjunction with
+**eos_purge_vlans**: (boolean. Default: false) This works in conjunction with
     the list of vlans configured with the ``vlans`` list. If true, all vlans
-    on the switch that are not in the ``vlans`` list will be removed.
+    on the switch that are not in the ``vlans`` list will be removed. Use caution
+    when using the purge feature. If for example you use the mlag role, vlans
+    will be created that won't be listed here, thereby removing those mlag-related
+    vlans.
 
 Dependencies
 ------------
