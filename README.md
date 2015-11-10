@@ -11,6 +11,15 @@ also exposed the vlan purge feature which is enabled by setting ``eos_purge_vlan
 the ``vlans`` object and remove any vlans found on the system that are not included
 in that list.
 
+
+Installation
+------------
+
+```
+ansible-galaxy install arista.eos-bridging
+```
+
+
 Requirements
 ------------
 
