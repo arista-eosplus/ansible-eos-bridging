@@ -53,6 +53,7 @@ default state is present.
 - **trunk_groups**: (list) The list of trunk groups associated with the vlan.
 - **enable**: (boolean) enable or disable the vlan
 - **state**: (choices: absent, present) Ensure the vlan is present or removed.
+The default state is present.
 
 **eos_purge_vlans**: (boolean. Default: false) This works in conjunction with
     the list of vlans configured with the ``vlans`` list. If true, all vlans
