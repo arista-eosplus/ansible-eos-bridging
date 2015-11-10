@@ -57,7 +57,7 @@ default state is present.
 **eos_purge_vlans**: (boolean. Default: false) This works in conjunction with
     the list of vlans configured with the ``vlans`` list. If true, all vlans
     on the switch that are not in the ``vlans`` list will be removed. Use caution
-    when using the purge feature. If for example you use the mlag role, vlans
+    when using the purge feature. If for example you use the arista.eos-mlag role, vlans
     will be created that won't be listed here, thereby removing those mlag-related
     vlans.
 
@@ -112,7 +112,7 @@ Sample host_vars/leaf1.example.com
           - peering1
           - peering2
 
-A simple playbook to enable MLAG on your leafs, leaf.yml
+A simple playbook to configure bridging, leaf.yml
 
     - hosts: leafs
       roles:
@@ -138,7 +138,7 @@ modification, are permitted provided that the following conditions are met:
   this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
 
-* Neither the name of ansible-eos-mlag nor the names of its
+* Neither the name of Arista nor the names of its
   contributors may be used to endorse or promote products derived from
   this software without specific prior written permission.
 
