@@ -6,10 +6,9 @@ This means that you do not need to write any ansible tasks. Simply create
 an object that matches the requirements below and this role will ingest that
 object and perform the necessary configuration.
 
-This role specifically enables configuration of EOS switchports and vlans. It
-also exposed the vlan purge feature which is enabled by setting ``eos_purge_vlans`` to true.  When purging is enabled, it will take the list of vlans configured in
-the ``vlans`` object and remove any vlans found on the system that are not included
-in that list.
+This role specifically enables configuration of EOS switchports and vlans.
+It also exposes purging functions to remove extraneous trunk groups in both
+the vlan and switchport configuration.
 
 
 Installation
@@ -23,11 +22,20 @@ ansible-galaxy install arista.eos-bridging
 Requirements
 ------------
 
-Requires the arista.eos role.  If you have not worked with the arista.eos role,
-consider following the [Quickstart][quickstart] guide.
+Requires an SSH connection for connectivity to your Arista device. You can use
+any of the built-in eos connection variables, or the convenience ``provider``
+dictionary.
 
 Role Variables
 --------------
+
+There are some variables that control global purging functions.
+
+|                          Variable | Type                  | Notes                                                                                                                                                                        |
+|----------------------------------:|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|       eos_purge_vlan_trunk_groups | boolean: true, false* | When the role provisions vlan trunk groups, it will remove extraneous trunk groups that are present in the configuration but haven't specified in your host variables.       |
+| eos_purge_switchport_trunk_groups | boolean: true, false* | When the role provisions switchport trunk groups, it will remove extraneous trunk groups that are present in the configuration but haven't specified in your host variables. |
+
 
 The tasks in this role are driven by the ``switchports`` and ``vlans`` objects
 described below:
@@ -54,22 +62,19 @@ described below:
 |       enable | boolean: true*, false     |                                                       |
 |        state | choices: present*, absent | Set the state for the vlan                            |
 
-|             Key | Type                  | Notes                                                                                                                                                                                                                                                                                                                                                            |
-|----------------:|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| eos_purge_vlans | boolean: true, false* | This works in conjunction with,the list of vlans configured with the ``vlans`` list. If true, all vlans,on the switch that are not in the ``vlans`` list will be removed. Use caution,when using the purge feature. If for example you use the arista.eos-mlag role, vlans,will be created that won't be listed here, thereby removing those mlag-related,vlans. |
 
 ```
 Note: Asterisk (*) denotes the default value if none specified
-``` 
+```
 
 
 Dependencies
 ------------
 
-The eos-bridging role utilizes modules distributed within the arista.eos role.
-The eos-bridging roles requires:
+The eos-bridging role is built on modules included in the core Ansible code.
+These modules were added in ansible version 2.1
 
-- arista.eos version 1.2.0
+- Ansible 2.1.0
 
 Example Playbook
 ----------------
