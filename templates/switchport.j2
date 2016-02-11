@@ -8,7 +8,7 @@ interface {{ item.name }}
    no switchport
  {# If we find existing switchport config, then default settings #}
  {# These default commands only run the first time absent is called #}
- {% set switchport_block = base_config | config_block('interface ' ~ item.name, indent=3) %}
+ {% set switchport_block = _eos_config | config_block('interface ' ~ item.name, indent=3) %}
    {% if switchport_block %}
     {% if switchport_block | join('\n') | re_search('^switchport$') %}
    default switchport mode
@@ -36,7 +36,7 @@ interface {{ item.name }}
 
    {# Determine which trunk groups need to be removed #}
    {% if eos_purge_switchport_trunk_groups %}
-    {% set switchport_block = base_config | config_block('interface ' ~ item.name, indent=3) %}
+    {% set switchport_block = _eos_config | config_block('interface ' ~ item.name, indent=3) %}
     {% if switchport_block %}
      {% set current = switchport_block | join('\n') | re_findall('^switchport trunk group (\S+)') %}
      {% set to_remove = current | symmetric_difference(item.trunk_groups) %}

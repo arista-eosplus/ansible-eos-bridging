@@ -4,7 +4,7 @@
 {% set state = item.state|default(default_vlan_state) %}
 
 {% if state == 'absent' %}
- {% set vlan_block = base_config | config_block('vlan ' ~ item.vlanid, indent=3) %}
+ {% set vlan_block = _eos_config | config_block('vlan ' ~ item.vlanid, indent=3) %}
  {% if vlan_block %}
 no vlan {{ item.vlanid }}
  {% endif %}
@@ -24,7 +24,7 @@ vlan {{ item.vlanid }}
 
   {# Determine which trunk groups need to be removed #}
   {% if eos_purge_vlan_trunk_groups %}
-   {% set vlan_block = base_config | config_block('vlan ' ~ item.vlanid, indent=3) %}
+   {% set vlan_block = _eos_config | config_block('vlan ' ~ item.vlanid, indent=3) %}
    {% if vlan_block %}
     {% set current = vlan_block | join('\n') | re_findall('^trunk group (\S+)') %}
     {% set to_remove = current | symmetric_difference(item.trunk_groups) %}

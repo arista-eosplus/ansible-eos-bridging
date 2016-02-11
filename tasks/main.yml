@@ -2,7 +2,7 @@
 # Force CLI for eos_command to ensure running config is returned properly
 - name: Gather EOS configuration
   eos_command:
-    commands='show running-config all'
+    commands='show running-config all | exclude \.\*'
     provider={{ provider|default(omit) }}
     auth_pass={{ auth_pass|default(omit) }}
     authorize={{ authorize|default(omit) }}
@@ -13,15 +13,19 @@
     use_ssl={{ use_ssl|default(omit) }}
     username={{ username|default(omit) }}
   register: output
+  no_log: '{{ no_log|default(true) }}'
+  when: _eos_config is not defined
 
 - set_fact:
-    base_config='{{ output.result[0] }}'
+    _eos_config='{{ output.result[0] }}'
+  no_log: "{{ no_log|default(true) }}"
+  when: _eos_config is not defined
 
 - name: Arista EOS VLAN resources
   eos_template:
     src=vlan.j2
     include_defaults=True
-    config={{ base_config|default(omit) }}
+    config={{ _eos_config|default(omit) }}
     provider={{ provider|default(omit) }}
     auth_pass={{ auth_pass|default(omit) }}
     authorize={{ authorize|default(omit) }}
@@ -32,13 +36,13 @@
     use_ssl={{ use_ssl|default(omit) }}
     username={{ username|default(omit) }}
   when: vlans is defined
-  with_items: '{{ vlans }}'
+  with_items: '{{ vlans|default([]) }}'
 
 - name: Arista EOS switchport resources
   eos_template:
     src=switchport.j2
     include_defaults=True
-    config={{ base_config|default(omit) }}
+    config={{ _eos_config|default(omit) }}
     provider={{ provider|default(omit) }}
     auth_pass={{ auth_pass|default(omit) }}
     authorize={{ authorize|default(omit) }}
@@ -49,4 +53,4 @@
     use_ssl={{ use_ssl|default(omit) }}
     username={{ username|default(omit) }}
   when: switchports is defined
-  with_items: '{{ switchports }}'
+  with_items: '{{ switchports|default([]) }}'
