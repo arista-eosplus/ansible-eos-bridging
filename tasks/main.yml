@@ -17,7 +17,7 @@
   when: _eos_config is not defined
 
 - set_fact:
-    _eos_config='{{ output.result[0] }}'
+    _eos_config='{{ output.stdout[0] }}'
   no_log: "{{ no_log|default(true) }}"
   when: _eos_config is not defined
 
