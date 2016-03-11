@@ -39,7 +39,7 @@ galaxy_info:
     - name: eos
       versions:
         - all
-  min_ansible_version: 2.1.0
+  min_ansible_version: 2.0.1
   categories:
     - networking
   galaxy_tags:
