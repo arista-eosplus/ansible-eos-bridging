@@ -31,10 +31,11 @@ Role Variables
 
 There are some variables that control global purging functions.
 
-|                          Variable | Type                  | Notes                                                                                                                                                                        |
-|----------------------------------:|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|       eos_purge_vlan_trunk_groups | boolean: true, false* | When the role provisions vlan trunk groups, it will remove extraneous trunk groups that are present in the configuration but haven't specified in your host variables.       |
-| eos_purge_switchport_trunk_groups | boolean: true, false* | When the role provisions switchport trunk groups, it will remove extraneous trunk groups that are present in the configuration but haven't specified in your host variables. |
+|                          Variable | Type                  | Notes                                    |
+| --------------------------------: | --------------------- | ---------------------------------------- |
+|       eos_purge_vlan_trunk_groups | boolean: true, false* | If true, when the role provisions vlan trunk groups, it will remove extraneous trunk groups that are present in the configuration but haven't been specified in your host variables. |
+| eos_purge_switchport_trunk_groups | boolean: true, false* | If true, when the role provisions switchport trunk groups, it will remove extraneous trunk groups that are present in the configuration but haven't been specified in your host variables. |
+|                   eos_purge_vlans | boolean: true, false* | If true, when the role provisions vlans, it will remove extraneous vlans that are present in the configuration but haven't been specified in your host variables. |
 
 
 The tasks in this role are driven by the ``switchports`` and ``vlans`` objects
@@ -42,25 +43,25 @@ described below:
 
 **switchports** (list) each entry contains the following keys:
 
-|                 Key | Type                      | Notes                                                  |
-|--------------------:|---------------------------|--------------------------------------------------------|
-|                name | string (required)         | The interface name of the switchport                   |
-|                mode | choices: access*, trunk   | Mode of operation for the interface                    |
-|         access_vlan | string                    | Only required for http or https connections            |
+|                 Key | Type                      | Notes                                    |
+| ------------------: | ------------------------- | ---------------------------------------- |
+|                name | string (required)         | The interface name of the switchport     |
+|                mode | choices: access*, trunk   | Mode of operation for the interface      |
+|         access_vlan | string                    | Only required for http or https connections |
 |   trunk_native_vlan | string                    | Vlan associated with the interface. Used if mode=trunk |
-| trunk_allowed_vlans | list                      | The native vlan used when mode=trunk.                  |
-|        trunk_groups | list                      | The set of trunk groups configured on the interface    |
-|               state | choices: present*, absent | Set the state for the switchport                       |
+| trunk_allowed_vlans | list                      | The native vlan used when mode=trunk.    |
+|        trunk_groups | list                      | The set of trunk groups configured on the interface |
+|               state | choices: present*, absent | Set the state for the switchport         |
 
 **vlans** (list) each entry contains the following keys:
 
-|          Key | Type                      | Notes                                                 |
-|-------------:|---------------------------|-------------------------------------------------------|
+|          Key | Type                      | Notes                                    |
+| -----------: | ------------------------- | ---------------------------------------- |
 |       vlanid | int (required)            | The vlan id. Example: 1, 1000, 1024. Without the Vlan |
-|         name | string                    | The name for the vlan. No spaces allowed.             |
-| trunk_groups | list                      | The set of trunk groups configured on the interface   |
-|       enable | boolean: true*, false     |                                                       |
-|        state | choices: present*, absent | Set the state for the vlan                            |
+|         name | string                    | The name for the vlan. No spaces allowed. |
+| trunk_groups | list                      | The set of trunk groups configured on the interface |
+|       enable | boolean: true*, false     |                                          |
+|        state | choices: present*, absent | Set the state for the vlan               |
 
 
 ```
