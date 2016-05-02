@@ -17,7 +17,9 @@
 {% set purge_list = tmp_list | difference(vlan_list) %}
 
 {% for vlan_id in purge_list %}
+   {% if vlan_id != '1' %} {# never remove vlan 1 #}
 
 no vlan {{ vlan_id }}
 
+   {% endif %}
 {% endfor %}
