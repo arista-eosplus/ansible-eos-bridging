@@ -177,7 +177,7 @@ Then run with:
 Developer Information
 ------------
 
-Development contributions are welcome. Please see [test/arista-ansible-role-test/README](test/arista-ansible-role-test/) for additional information, including running role tests for development.
+Development contributions are welcome. Please see [test/arista-ansible-role-test/README](https://github.com/arista-eosplus/arista-ansible-role-test/blob/master/README.md) for additional information, including running role tests for development.
 
 
 License
