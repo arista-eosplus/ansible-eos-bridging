@@ -1,1 +1,0 @@
-# arista-ansible-role-test
