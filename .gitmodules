@@ -1,3 +1,0 @@
-[submodule "test/arista-ansible-role-test"]
-	path = test/arista-ansible-role-test
-	url = https://github.com/arista-eosplus/arista-ansible-role-test.git
