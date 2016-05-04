@@ -173,6 +173,13 @@ Then run with:
 
     ansible-playbook -i hosts leaf.yml
 
+
+Developer Information
+------------
+
+Development contributions are welcome. Please see [test/arista-ansible-role-test/README](test/arista-ansible-role-test/README.md) for additional information, including running role tests for development.
+
+
 License
 -------
 
