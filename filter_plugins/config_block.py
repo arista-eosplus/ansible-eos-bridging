@@ -17,12 +17,13 @@
 #
 
 from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
 
 import re
 import collections
 
 from ansible import errors
+
+__metaclass__ = type
 
 def parse_config(config, indent=1):
     regexp = re.compile(r'^\s*(.+)$')
@@ -31,7 +32,6 @@ def parse_config(config, indent=1):
 
     ancestors = list()
     data = collections.OrderedDict()
-    banner = False
 
     for line in config:
         text = str(line).strip()

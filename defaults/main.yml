@@ -1,9 +1,5 @@
 ---
 # defaults file for eos-bridging
-# these defaults will cause Ansible to skip all tasks
-# cache_eos_config: yes
-
-# eos_purge_vlans: no / not implemented
 
 eos_purge_vlan_trunk_groups: no
 default_vlan_state: present
