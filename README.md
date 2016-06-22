@@ -1,7 +1,7 @@
 Bridging Role for EOS
 =====================
 
-Test XXX XXX The arista.eos-bridging role creates an abstraction for common layer 2 bridging configuration.
+The arista.eos-bridging role creates an abstraction for common layer 2 bridging configuration.
 This means that you do not need to write any ansible tasks. Simply create
 an object that matches the requirements below and this role will ingest that
 object and perform the necessary configuration.
@@ -219,10 +219,3 @@ Author Information
 ------------------
 
 Please raise any issues using our GitHub repo or email us at ansible-dev@arista.com
-XXX
-XXX
-XXX
-XXX
-XXX
-XXX
-XXX
