@@ -1,5 +1,6 @@
 ---
 # defaults file for eos-bridging
+eos_save_running_config: true
 
 eos_purge_vlan_trunk_groups: no
 default_vlan_state: present
