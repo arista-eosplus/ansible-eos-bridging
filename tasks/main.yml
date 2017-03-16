@@ -1,4 +1,14 @@
 ---
+# Determine what resources we will use for running the role:
+# If using Ansible 2.1 or lower, we can use eos_template
+# If using Ansible 2.2 or higher, we must use eos_config
+# resource_version is set to 2.2 by default (since most users will be
+# on updated versions), change it if we're running 2.1 or lower.'
+- set_fact:
+    resource_version: '2.1'
+  when: ansible_version.major < 2 or
+        (ansible_version.major == 2 and ansible_version.minor < 2)
+
 # Force CLI for eos_command to ensure running config is returned properly
 - name: Gather EOS configuration
   eos_command:
@@ -21,59 +31,6 @@
   no_log: "{{ no_log | default(true) }}"
   when: _eos_config is not defined
 
-- name: Arista EOS VLAN resources
-  eos_template:
-    src: vlan.j2
-    include_defaults: True
-    config: "{{ _eos_config | default(omit) }}"
-    provider: "{{ provider | default(omit) }}"
-    auth_pass: "{{ auth_pass | default(omit) }}"
-    authorize: "{{ authorize | default(omit) }}"
-    host: "{{ host | default(omit) }}"
-    password: "{{ password | default(omit) }}"
-    port: "{{ port | default(omit) }}"
-    transport: "{{ transport | default(omit) }}"
-    use_ssl: "{{ use_ssl | default(omit) }}"
-    username: "{{ username | default(omit) }}"
-  notify: save running config
-  when: vlans is defined
-  with_items: "{{ vlans | default([]) }}"
-
-- name: Arista EOS purge VLAN resources
-  eos_template:
-    src: purge_vlans.j2
-    include_defaults: True
-    config: "{{ _eos_config | default(omit) }}"
-    provider: "{{ provider | default(omit) }}"
-    auth_pass: "{{ auth_pass | default(omit) }}"
-    authorize: "{{ authorize | default(omit) }}"
-    host: "{{ host | default(omit) }}"
-    password: "{{ password | default(omit) }}"
-    port: "{{ port | default(omit) }}"
-    transport: "{{ transport | default(omit) }}"
-    use_ssl: "{{ use_ssl | default(omit) }}"
-    username: "{{ username | default(omit) }}"
-  notify: save running config
-  when:
-    eos_purge_vlans is defined and
-    eos_purge_vlans and
-    vlans is defined
-  with_items: "{{ eos_purge_vlans | default([]) }}"
-
-- name: Arista EOS switchport resources
-  eos_template:
-    src: switchport.j2
-    include_defaults: True
-    config: "{{ _eos_config | default(omit) }}"
-    provider: "{{ provider | default(omit) }}"
-    auth_pass: "{{ auth_pass | default(omit) }}"
-    authorize: "{{ authorize | default(omit) }}"
-    host: "{{ host | default(omit) }}"
-    password: "{{ password | default(omit) }}"
-    port: "{{ port | default(omit) }}"
-    transport: "{{ transport | default(omit) }}"
-    use_ssl: "{{ use_ssl | default(omit) }}"
-    username: "{{ username | default(omit) }}"
-  notify: save running config
-  when: switchports is defined
-  with_items: "{{ switchports | default([]) }}"
+# Import the resource tasks based on the version of ansible in use
+- name: Include the Arista EOS Bridging resources
+  include: "tasks/resources{{ resource_version }}.yml"

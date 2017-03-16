@@ -68,7 +68,7 @@ testcases:
          switchport
          switchport mode trunk
          switchport trunk native vlan 33
-         switchport trunk allowed vlans 250-300
+         switchport trunk allowed vlan 250-300
          switchport trunk group peering5
          switchport trunk group peering6
 
@@ -101,6 +101,6 @@ testcases:
          switchport
          switchport mode trunk
          switchport trunk native vlan 33
-         switchport trunk allowed vlans 250-300
+         switchport trunk allowed vlan 250-300
          switchport trunk group peering5
          switchport trunk group peering6

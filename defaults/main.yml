@@ -7,3 +7,5 @@ default_vlan_state: present
 
 eos_purge_switchport_trunk_groups: no
 default_switchport_state: present
+
+resource_version: '2.2'
