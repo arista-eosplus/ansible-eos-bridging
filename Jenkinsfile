@@ -17,6 +17,8 @@ node('master') {
 
     lock('Ansible-Role-Test') {
 
+        currentBuild.result = "SUCCESS"
+
         try {
 
             stage ('Run tests for ansible-eos-bridging role') {
