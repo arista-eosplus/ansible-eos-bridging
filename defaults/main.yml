@@ -9,3 +9,6 @@ eos_purge_switchport_trunk_groups: no
 default_switchport_state: present
 
 resource_version: '2.2'
+gather_config_commands:
+  - command: 'show running-config all | exclude \.\*'
+    output: 'text'
